@@ -1,13 +1,89 @@
-// Initialize AOS (Animate On Scroll)
+// Initialize AOS with enhanced settings
 AOS.init({
-    duration: 800,
+    duration: 1000,
+    easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
     once: false,
     mirror: true,
-    offset: 100,
-    easing: 'ease-out',
     anchorPlacement: 'top-bottom',
-    disable: 'mobile'
+    disable: false,
+    startEvent: 'DOMContentLoaded',
+    offset: 100,
+    delay: 50,
+    useClassNames: true,
+    disableMutationObserver: false,
+    throttleDelay: 99,
+    debounceDelay: 50
 });
+
+// Add hover effect for skill badges
+document.querySelectorAll('.skill-badge-container').forEach((badge, index) => {
+    badge.style.animationDelay = `${index * 100}ms`;
+    badge.addEventListener('mouseover', function() {
+        this.style.zIndex = '1';
+    });
+    badge.addEventListener('mouseleave', function() {
+        setTimeout(() => {
+            this.style.zIndex = '0';
+        }, 300);
+    });
+});
+
+// Add scroll-triggered animations for skill categories
+const observerOptions = {
+    threshold: 0.2,
+    rootMargin: '0px'
+};
+
+const skillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.transform = 'translateY(0)';
+            entry.target.style.opacity = '1';
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.skill-category').forEach(category => {
+    category.style.transform = 'translateY(20px)';
+    category.style.opacity = '0';
+    category.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+    skillObserver.observe(category);
+});
+
+// Smooth animation for progress bars
+const animateProgressBars = () => {
+    const progressBars = document.querySelectorAll('.progress-bar');
+    progressBars.forEach(bar => {
+        const targetWidth = bar.style.width;
+        bar.style.width = '0%';
+        setTimeout(() => {
+            bar.style.width = targetWidth;
+        }, 100);
+    });
+};
+
+// Trigger progress bar animation when skills section is in view
+const skillsSection = document.querySelector('#skills');
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            animateProgressBars();
+            // Animate skill badges
+            const badges = document.querySelectorAll('.skill-badge-container');
+            badges.forEach((badge, index) => {
+                setTimeout(() => {
+                    badge.style.opacity = '1';
+                    badge.style.transform = 'scale(1)';
+                }, index * 100);
+            });
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.2 });
+
+if (skillsSection) {
+    observer.observe(skillsSection);
+}
 
 // Function to reset AOS animations
 function resetAOS() {
