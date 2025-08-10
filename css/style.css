@@ -561,6 +561,14 @@ body {
 }
 
 .project-card:hover {
+<<<<<<< HEAD
+=======
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.project-card:hover {
+>>>>>>> c868bdc209673afee2eb6a416001884ccf143d76
     transform: translateY(-5px);
     background: rgba(255, 255, 255, 0.15);
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
@@ -606,6 +614,7 @@ body {
     transform: translateY(-2px);
 }
 
+<<<<<<< HEAD
 /* FIX: Make links clickable above overlay */
 .project-card a {
     position: relative;
@@ -613,6 +622,8 @@ body {
 }
 
 
+=======
+>>>>>>> c868bdc209673afee2eb6a416001884ccf143d76
 /* Education Section */
 .timeline {
     position: relative;
@@ -718,11 +729,14 @@ body {
     pointer-events: auto;
 }
 
+<<<<<<< HEAD
 /* Fix to allow clicks on project cards even if animation not triggered */
 #projects .project-card {
     pointer-events: auto !important;
 }
 
+=======
+>>>>>>> c868bdc209673afee2eb6a416001884ccf143d76
 /* Responsive Design */
 @media (max-width: 768px) {
     .hero h1 {
